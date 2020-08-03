@@ -76,6 +76,7 @@ class snake(object):
 				else:
 					c.move(c.dirnx, c.dirny)
 
+
 	def reset(self, pos):
 		pass
 
@@ -120,16 +121,6 @@ def main():
 		pygame.time.delay(50)
 		clock.tick(10)
 		redrawWindow(win)
-		#flag = False
-	#pygame.quit()
-
 		
-
-# # rows = 
-# # w = 
-# # h = 
-
-# cube.rows = rows
-# cube.w = w
 
 main()
