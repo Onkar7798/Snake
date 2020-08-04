@@ -5,16 +5,32 @@ import tkinter as tk
 from tkinter import messagebox
 
 class cube(object):
-	rows = 0
-	w = 0
+	rows = 20
+	w = 500
 	def __init__(self, start, dirnx = 1, dirny = 0, color = (255,0,0)):
-		pass
+		self.pos = start
+		self.dirnx = 1
+		self.dirny = 0
+		self.color = color
 
 	def move(self, dirnx, dirny):
-		pass	
+		self.dirnx = dirnx
+		self.dirny = dirny
+		self.pos(self.pos[0] + self.dirnx, self.pos[1] + self.dirny)	
 
 	def draw(self, surface, eyes = False):
-		pass
+		dis = self.w // self.rows
+		i = self.pos[0]
+		j = self.pos[1]
+		pygame.draw.rect(surface, self.color, (i*dis+1, j*dis+1, dis-2, dis-2))
+		if eyes:
+			centre = dis//2
+			radius = 3
+			circleMiddle = (i*dis+centre-radius, j*dis+8)
+			circleMiddle2 = (i*dis + dis - radius*2, j*dis+8)
+			pygame.draw.circle(surface, (0, 0, 0), circleMiddle, radius)
+			pygame.draw.circle(surface, (0, 0, 0), circleMiddle2, radius)
+
 
 class snake(object):
 	body = []
@@ -84,7 +100,11 @@ class snake(object):
 		pass
 
 	def draw(self, surface):
-		pass
+		for i, c in enumerate(self.body):
+			if i == 0:
+				c.draw(surface, True)
+			else:
+				c.draw(surface)
 
 def drawGrid(w, rows, surface):
 	size = w//rows
@@ -100,6 +120,7 @@ def drawGrid(w, rows, surface):
 def redrawWindow(surface):
 	global rows, width
 	surface.fill((0, 0, 0))
+	s.draw(surface)
 	drawGrid(width, rows, surface)
 	pygame.display.update()
 
@@ -110,7 +131,7 @@ def message_box(subject, content):
 	pass
 
 def main():
-	global width, rows
+	global width, rows, s
 	width = 500
 	rows = 20
 	win = pygame.display.set_mode((width, width))
